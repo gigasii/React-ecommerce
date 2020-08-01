@@ -4,42 +4,64 @@ import Person from './Person/Person';
 
 class App extends Component {
   state = {
-    person: {
-      name: 'Giggs',
-      age: 23
-    },
-    otherProperty: 'Other property'
+    people: [
+      { id: 1, name: 'Giggs', age: 23 },
+      { id: 2, name: 'Benny', age: 20 }
+    ],
+    otherProperty: 'Other property',
+    showPeople: false
   }
 
-  personChangeHandler = (name_, age_) => {
+  nameChangeHandler = (id, event) => {
+    const index = this.state.people.findIndex(person => {
+      return person.id === id;
+    })
+    const newPeople = [...this.state.people];
+    newPeople[index].name = event.target.value;
+
     this.setState({
-      person: {
-        name: name_,
-        age: age_
-      }
+      people: newPeople
     });
   }
 
-  nameChangeHandler = (event) => {
+  toggleVisibleHandler = () => {
     this.setState({
-      person: {
-        name: event.target.value,
-        age: 23
-      }
+      showPeople: !this.state.showPeople
+    })
+  }
+
+  deletePersonHandler = (index) => {
+    const people = [...this.state.people];
+    people.splice(index, 1);
+    this.setState({
+      people: people
     });
   }
 
-  render() {
+  render() {  
+    let togglePeople = null;
+    if (this.state.showPeople)
+    {
+      togglePeople = (
+        <div>
+          {
+            this.state.people.map((person, index) => {
+              return <Person
+                key={person.id}
+                name={person.name}
+                age={person.age}
+                click={this.deletePersonHandler.bind(this, index)}
+                changed={this.nameChangeHandler.bind(this, person.id)}
+              />
+            })
+          }
+        </div>
+      );
+    }
     return (
       <div className="App">
-        <h1>React Practice</h1>
-        <Person 
-          name={this.state.person.name} 
-          age={this.state.person.age}
-          clicked={this.personChangeHandler.bind(this, 'Max', '10')}
-          changed={this.nameChangeHandler}
-        >{this.state.otherProperty}
-        </Person>
+        <button onClick={this.toggleVisibleHandler}>Toggle</button>
+        {togglePeople}
       </div>
     );
   }
