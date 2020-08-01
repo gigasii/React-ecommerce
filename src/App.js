@@ -1,21 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
+import Class from './App.css';
 import Person from './Person/Person';
-import styled from 'styled-components';
-
-const StyledButton = styled.button`
-  background-color: ${props => props.alt ? 'red' : 'green'};
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
-  
-  &:hover {
-    background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
-    color: black;
-  }
-`;
 
 class App extends Component {
   state = {
@@ -53,10 +38,19 @@ class App extends Component {
     });
   }
 
-  render() {
-    let togglePeople = null;
+  retriveProperties = (className) => {
+    return className.join(' ');
+  }
+
+  render() 
+  {
+    let togglePeople  = null;
+    const textClass   = [Class.red, Class.bold];
+    const btnClass    = [];  
+    
     if (this.state.showPeople)
     {
+      // Toggle people visibility
       togglePeople = (
         <div>
           {
@@ -72,18 +66,17 @@ class App extends Component {
           }
         </div>
       );
+      // Toggle button color
+      btnClass.push(Class.Red);
     }
-
-    const classes = [];
-    this.state.people.length >= 2 ? classes.push('red') : classes.push('bold');
-
+    
     return (
-      <div className="App">
-        <p className={classes.join(' ')}>React Practice</p>
-        <StyledButton
-          alt={this.state.showPeople}
+      <div className={Class.App}>
+        <p className={this.retriveProperties(textClass)}>React Practice</p>
+        <button
+          className={this.retriveProperties(btnClass)}
           onClick={this.toggleVisibleHandler}
-        >Toggle</StyledButton>
+        >Toggle</button>
         {togglePeople}
       </div>
     );
