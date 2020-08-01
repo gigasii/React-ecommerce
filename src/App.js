@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Radium, {StyleRoot} from 'radium';
 
 class App extends Component {
   state = {
@@ -38,7 +39,20 @@ class App extends Component {
     });
   }
 
-  render() {  
+  render() {
+    const inlineStyle = {
+      backgroundColor: 'green',
+      color: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer',
+      ":hover": {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
+    };
+
     let togglePeople = null;
     if (this.state.showPeople)
     {
@@ -57,14 +71,30 @@ class App extends Component {
           }
         </div>
       );
+      // Dynamically change inline-styling
+      inlineStyle.backgroundColor = 'red';
+      inlineStyle[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
+
+    const classes = [];
+    this.state.people.length >= 2 ? classes.push('red') : classes.push('bold');
+
     return (
-      <div className="App">
-        <button onClick={this.toggleVisibleHandler}>Toggle</button>
-        {togglePeople}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <p className={classes.join(' ')}>React Practice</p>
+          <button
+            style={inlineStyle}
+            onClick={this.toggleVisibleHandler}
+          >Toggle</button>
+          {togglePeople}
+        </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
