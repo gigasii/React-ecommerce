@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Class from './App.css';
 import People from '../presentationals/People/People';
 import Cockpit from '../presentationals/Cockpit/Cockpit';
+import withClass from '../utilities/withClass';
+import Context from '../utilities/context';
 
 class App extends Component {
   state = {
@@ -9,7 +11,7 @@ class App extends Component {
       { id: 1, name: 'Giggs', age: 23 },
       { id: 2, name: 'Benny', age: 20 }
     ],
-    otherProperty: 'Other property',
+    showContext: 'Delete',
     showPeople: false
   }
 
@@ -53,15 +55,21 @@ class App extends Component {
     }
     
     return (
-      <div className={Class.App}>
+      <Fragment>
         <Cockpit
           showPeople={this.state.showPeople}
           clicked={this.toggleVisibleHandler}
         />
-        {people}
-      </div>
+        <Context.Provider 
+          value={{
+            contextText: this.state.showContext
+          }}
+        >
+          {people}
+        </Context.Provider>
+      </Fragment>
     );
   }
 }
 
-export default App;
+export default withClass(App, Class.App);

@@ -6,20 +6,18 @@ const retriveProperties = (className) => {
 }
 
 const cockpit = (props) => {
-   // Debugging for rendering
    console.log('[Cockpit.js is rendered]');
    // Toggle button and text color
-   const textClass = [];
+   const txtClass = [];
    const btnClass = [];
    if (props.showPeople)
    {
-      textClass.push(Class.red);
+      txtClass.push(Class.red);
       btnClass.push(Class.Red);
    }
-
    return (
       <div className={Class.Cockpit}>
-         <p className={retriveProperties(textClass)}>React Practice</p>
+         <p className={retriveProperties(txtClass)}>React Practice</p>
          <button
             className={retriveProperties(btnClass)}
             onClick={props.clicked}

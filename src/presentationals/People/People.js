@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Person from './Person/Person';
 
 const people = (props) => {
-   // Debugging for rendering
-   console.log('[People.js is rendered]');
+   // UseEffect only called after render (According to dependencies)
+   useEffect(() => {
+      console.log('[People.js has updated]');
+   }, [props.people]);
 
+   console.log('[People.js is rendered]');
    return props.people.map((person, index) => {
       return <Person
          key={person.id}

@@ -1,14 +1,39 @@
-import React from 'react';
+import React, {Component, Fragment} from 'react';
 import Class from './Person.css';
+import withClass from '../../../utilities/withClass';
+import Context from '../../../utilities/context';
 
-const person = (props) => {
-  return (
-    <div className={Class.Person}>
-      <p>Hi I'm {props.name}, I am {props.age}</p>
-      <p onClick={props.click}>Click here to delete</p>
-      <input type="text" onChange={props.change} value={props.name}/>
-    </div>
-  );
+class Person extends Component
+{
+  // Initialization required for use of context
+  static contextType = Context;
+
+  constructor(props)
+  {
+    super(props);
+    this.inputReference = React.createRef();
+  }
+
+  componentDidMount()
+  {
+    this.inputReference.current.focus();
+  }
+
+  render()
+  {
+    console.log('[Person.js is rendered]');
+    return (
+      <Fragment>
+        <p>Hi I'm {this.props.name}, I am {this.props.age}</p>
+        <p onClick={this.props.click}>{this.context.contextText}</p>
+        <input type="text" 
+          onChange={this.props.change} 
+          value={this.props.name}
+          ref={this.inputReference}
+        />
+      </Fragment>
+    );
+  }
 }
 
-export default person;
+export default withClass(Person, Class.Person);
