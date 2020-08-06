@@ -24,3 +24,5 @@ yarn-error.log*
 .vscode
 config
 scripts
+front/.vscode
+front/node_modules
