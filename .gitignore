@@ -26,3 +26,4 @@ config
 scripts
 front/.vscode
 front/node_modules
+back/node_modules
