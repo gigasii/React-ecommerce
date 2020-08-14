@@ -21,11 +21,20 @@ exports.postOrder = (req, res, next) => {
 }
 
 exports.getIngredients = (req, res, next) => {
-   Ingredient.findOne().select(['-_id'])
+   Ingredient.findOne({}, {_id: 0})
       .then(ingredients => {
-         res.status(200).json({
-            ingredients: ingredients
-         });
+         res.status(200).json(ingredients);
+      })
+      .catch(error => {
+         error.statusCode = 500;
+         next(error);
+      });
+}
+
+exports.getOrders = (req, res, next) => {
+   Order.find({}, {ingredients: 1, price: 1})
+      .then(orders => {
+         res.status(200).json(orders);
       })
       .catch(error => {
          error.statusCode = 500;

@@ -20,15 +20,14 @@ class BurgerBuilder extends Component
       ingredients: null,
       totalPrice: 3,
       purchasable: false,
-      order: false,
-      loading: false
+      order: false
    }
 
    componentDidMount()
    {
       axios.get('/ingredients')
       .then(res => {
-         this.setState({ingredients: res.data.ingredients});
+         this.setState({ingredients: res.data});
       })
       .catch(err => {})
    }
@@ -37,7 +36,8 @@ class BurgerBuilder extends Component
    {
       const sum = Object.keys(ingredients).map(ingredientName => {
          return ingredients[ingredientName];
-      }).reduce((sum, current) => {
+      })
+      .reduce((sum, current) => {
          return sum + current;
       }, 0);
       
@@ -80,31 +80,17 @@ class BurgerBuilder extends Component
       });
    }
 
-   loading = (bool) => {
-      this.setState({
-         loading: bool,
-         order: bool
-      });
-   }
-
    orderPurchaseHandler = () => {
-      this.loading(true);
-      // Create the order
-      const order = {
-         ingredients: this.state.ingredients,
-         price: this.state.totalPrice,
-         customer: {
-            name: 'Dummy user',
-            email: 'test@test.com'
-         }
-      };
-      // Send a http request to server
-      axios.post('/order', order)
-      .then(res => {
-         this.loading(false);
-      })
-      .catch(err => {
-         this.loading(false);
+      const queries = [];
+      for (let key in this.state.ingredients)
+      {
+         queries.push(`${key}=${this.state.ingredients[key]}`);
+      }
+      queries.push(`price=${this.state.totalPrice}`);
+      const queryParams = `?${queries.join('&')}`;
+      this.props.history.push({
+         pathname: '/checkout',
+         search: queryParams
       });
    }
 
@@ -118,7 +104,7 @@ class BurgerBuilder extends Component
       }
       
       // Check loading
-      let orderSummary = this.state.loading || !this.state.ingredients ? <Spinner/> : 
+      let orderSummary = this.state.ingredients ?
       (
          <OrderSummary
             ingredients={this.state.ingredients}
@@ -126,7 +112,7 @@ class BurgerBuilder extends Component
             orderCanceled={this.orderCancelHandler}
             price={this.state.totalPrice}
          />
-      );
+      ) : <Spinner/>;
 
       let burger = this.state.ingredients ?
       (

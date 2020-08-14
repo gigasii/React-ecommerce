@@ -18,6 +18,16 @@ const orderSchema = new Schema({
       email: {
          type: String,
          required: true
+      },
+      address: {
+         street: {
+            type: String,
+            required: true
+         },
+         postalCode: {
+            type: String,
+            required: true
+         }
       }
    }
 });
