@@ -1,8 +1,19 @@
 // Imports
 const Order = require('../models/order');
 const Ingredient = require('../models/ingredient');
+const {validationResult} = require('express-validator');
 
 exports.postOrder = (req, res, next) => {
+   // Validation
+   const errors = validationResult(req);
+   if (!errors.isEmpty()) 
+   {
+      return res.status(200).json({
+         field: errors.array()[0].msg,
+         validation: false
+      });
+   }
+   // Create order
    const order = new Order({
       ingredients: req.body.ingredients,
       price: req.body.price,
@@ -11,7 +22,8 @@ exports.postOrder = (req, res, next) => {
    order.save()
       .then(result => {
          res.status(200).json({
-            message: 'Order successfully created'
+            message: 'Order successfully created',
+            validation: true
          });
       })
       .catch(error => {

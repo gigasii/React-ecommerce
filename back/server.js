@@ -26,11 +26,11 @@ app.use(routes);
 app.use((err, req, res, next) => {
    const code = err.statusCode;
    const message = err.message;
-   res.status(code).json({ reason: message });
+   res.status(code).json({reason: message});
 });
 
 // Connect to database
-mongoose.connect(MONGO_DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_DB_URI, {useNewUrlParser: true, useUnifiedTopology: true})
    .then(() => {
       // Start server
       app.listen(8080);
