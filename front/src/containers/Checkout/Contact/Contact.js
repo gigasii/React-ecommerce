@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
-import Class from './ContactData.css';
+import Class from './Contact.css';
 import Button from '../../../components/UI/Button/Button';
 import axios from '../../../axios';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
+import UIContext from '../../../store/context';
 
-class ContactData extends Component
+class Contact extends Component
 {
+   // Initialization required for use of context
+   static contextType = UIContext;
+
    state = {
       form: {
          name: {
@@ -67,8 +71,9 @@ class ContactData extends Component
    }
 
    orderHandler = (event) => {
-      event.preventDefault();
       this.loading(true);
+      // Prevent page from reloading after submitting 
+      event.preventDefault();
       // Create the order
       const formData = {};
       for (let key in this.state.form)
@@ -76,17 +81,17 @@ class ContactData extends Component
          formData[key] = this.state.form[key].value;
       }
       const order = {
-         ingredients: this.props.ingredients,
-         price: this.props.totalPrice,
+         ingredients: this.context.ingredients,
+         price: this.context.totalPrice,
          customer: formData
       };
       // Send a http request to server
       axios.post('/order', order)
          .then(res => {
+            this.loading(false);
             if (!res.data.validation)
             {
                this.validationHandler(res.data.field);
-               this.loading(false);
                return;
             }
             this.props.history.push('/');
@@ -159,11 +164,11 @@ class ContactData extends Component
 
       return (
          <div className={Class.ContactData}>
-            <h4>Enter your contact data:</h4>
+            <h4>Enter your contact details:</h4>
             {form}
          </div>
       );
    }
 }
 
-export default ContactData;
+export default Contact;
