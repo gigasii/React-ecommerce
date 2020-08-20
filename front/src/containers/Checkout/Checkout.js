@@ -19,13 +19,19 @@ class Checkout extends Component
 
    render()
    {
+      // Check if there are ingredients for summary to show
+      const checkoutSummary = this.context.ingredients ? 
+      (
+         <CheckoutSummary
+            ingredients={this.context.ingredients}
+            checkoutCancelled={this.checkoutCancelled}
+            checkoutContinued={this.checkoutContinued}
+         />
+      ) : this.props.history.replace('/');
+
       return (
          <div>
-            <CheckoutSummary 
-               ingredients={this.context.ingredients}
-               checkoutCancelled={this.checkoutCancelled}
-               checkoutContinued={this.checkoutContinued}
-            />
+            {checkoutSummary}
             <Route 
                path={`${this.props.match.path}/contact-data`} 
                component={Contact}

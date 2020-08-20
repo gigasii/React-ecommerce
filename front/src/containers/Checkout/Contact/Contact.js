@@ -94,7 +94,7 @@ class Contact extends Component
                this.validationHandler(res.data.field);
                return;
             }
-            this.props.history.push('/');
+            this.props.history.replace('/');
          })
          .catch(err => {
             this.loading(false);
@@ -143,18 +143,18 @@ class Contact extends Component
       let form = !this.state.loading ?
       (
          <form onSubmit={this.orderHandler}>
-            {
-               formElementsArray.map(formElement => (
-                  <Input
-                     key={formElement.id}
-                     elementType={formElement.config.elementType}
-                     elementConfig={formElement.config.elementConfig}
-                     value={formElement.config.value}
-                     changed={this.inputChangedHandler.bind(this, formElement.id)}
-                     valid={formElement.config.valid}
-                  />
-               ))
-            }
+         {
+            formElementsArray.map(formElement => (
+               <Input
+                  key={formElement.id}
+                  elementType={formElement.config.elementType}
+                  elementConfig={formElement.config.elementConfig}
+                  value={formElement.config.value}
+                  changed={this.inputChangedHandler.bind(this, formElement.id)}
+                  valid={formElement.config.valid}
+               />
+            ))
+         }
             <Button
                buttonType="Success"
                clicked={this.orderHandler}

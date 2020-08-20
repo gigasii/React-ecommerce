@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Class from './BurgerIngredient.css';
 
 const burgerIngredient = (props) => {
+   useEffect(() => console.log(`BurgerIngredient mounted`), []);
+
    let ingredient;
    switch (props.type) 
    {

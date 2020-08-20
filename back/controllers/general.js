@@ -33,7 +33,7 @@ exports.postOrder = (req, res, next) => {
 }
 
 exports.getIngredients = (req, res, next) => {
-   Ingredient.findOne({}, {_id: 0})
+   Ingredient.findOne(null, {_id: 0})
       .then(ingredients => {
          res.status(200).json(ingredients);
       })
@@ -44,7 +44,7 @@ exports.getIngredients = (req, res, next) => {
 }
 
 exports.getOrders = (req, res, next) => {
-   Order.find({}, {ingredients: 1, price: 1})
+   Order.find(null, {_id: 1, ingredients: 1, price: 1})
       .then(orders => {
          res.status(200).json(orders);
       })

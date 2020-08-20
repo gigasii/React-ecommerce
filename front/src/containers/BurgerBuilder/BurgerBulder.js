@@ -13,7 +13,13 @@ class BurgerBuilder extends Component
 
    state = {
       order: false
-   }   
+   }
+
+   componentDidMount()
+   {
+     this.context.setIngredients();
+     console.log(`BurgerBuilder mounted`);
+   }
 
    orderClickHandler = () => {
       this.setState({

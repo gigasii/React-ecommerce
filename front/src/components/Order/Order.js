@@ -10,6 +10,7 @@ const order = (props) => {
          amount: props.ingredients[ingredientName]
       });
    }
+   
    const ingredientsOutput = ingredients.map(ig => {
       return <span key={ig.name}>{ig.name} ({ig.amount})</span>
    });

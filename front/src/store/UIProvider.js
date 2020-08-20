@@ -14,19 +14,20 @@ class UIProvider extends Component
 {
    state = {
       ingredients: null,
-      totalPrice: 3,
-      purchasable: false
+      totalPrice: 0,
+      purchasable: null
    }
 
-   componentDidMount()
-   {
+   setIngredientsHandler = () => {
       axios.get('/ingredients')
-      .then(res => {
-         this.setState({
-            ingredients: res.data
-         });
-      })
-      .catch(err => {})
+         .then(res => {
+            this.setState({
+               ingredients: res.data.ingredients,
+               totalPrice: res.data.totalPrice,
+               purchasable: res.data.purchasable
+            });
+         })
+         .catch(err => {});
    }
 
    addIngredientHandler = (type) => { 
@@ -70,6 +71,7 @@ class UIProvider extends Component
                ingredients: this.state.ingredients,
                totalPrice: this.state.totalPrice,
                purchasable: this.state.purchasable,
+               setIngredients: this.setIngredientsHandler,
                addIngredient: this.addIngredientHandler,
                removeIngredient: this.removeIngredientHandler
             }}

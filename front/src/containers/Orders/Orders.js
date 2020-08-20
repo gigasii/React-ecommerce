@@ -7,7 +7,6 @@ class Orders extends Component
 {
    state = {
       orders: [],
-      loading: false
    }
 
    componentDidMount()
@@ -28,11 +27,7 @@ class Orders extends Component
                orders: fetchedOrders
             });
          })
-         .catch(err => {
-            this.setState({
-               loading: false
-            });
-         });
+         .catch(err => {});
    }
 
    render()
