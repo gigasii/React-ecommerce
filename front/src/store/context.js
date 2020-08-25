@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UIContext = React.createContext();
+const context = React.createContext();
 
-export default UIContext;
+export default context;
 

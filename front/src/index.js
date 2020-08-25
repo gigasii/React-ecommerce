@@ -4,14 +4,14 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter} from 'react-router-dom';
-import UIProvider from './store/UIProvider';
+import Provider from './store/provider';
 
 const app = (
-   <UIProvider>
+   <Provider>
       <BrowserRouter>
          <App/>
       </BrowserRouter>
-   </UIProvider>
+   </Provider>
 );
 
 ReactDOM.render(app, document.getElementById('root'));

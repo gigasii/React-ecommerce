@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import {Route} from 'react-router-dom';
 import Contact from './Contact/Contact';
-import UIContext from '../../store/context';
+import Context from '../../store/context';
 
 class Checkout extends Component 
 {
    // Initialization required for use of context
-   static contextType = UIContext;
+   static contextType = Context;
 
    checkoutCancelled = () => {
       this.props.history.goBack();

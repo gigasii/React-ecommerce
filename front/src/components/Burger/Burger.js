@@ -1,10 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Class from './Burger.css';
 import BurgerIngredient from './BurgerIngredients/BurgerIngredients';
 
 const burger = (props) => {
-   useEffect(() => console.log(`Burger mounted`), []);
-   
    let transformedIngredients = Object.keys(props.ingredients).map(ingredientName => {
       return [...Array(props.ingredients[ingredientName])].map((_, index) => {
          return <BurgerIngredient

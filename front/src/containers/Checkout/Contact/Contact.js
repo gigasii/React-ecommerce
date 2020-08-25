@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import Class from './Contact.css';
 import Button from '../../../components/UI/Button/Button';
 import axios from '../../../axios';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
-import UIContext from '../../../store/context';
+import Context from '../../../store/context';
 
 class Contact extends Component
 {
    // Initialization required for use of context
-   static contextType = UIContext;
+   static contextType = Context;
 
    state = {
       form: {
@@ -96,9 +96,7 @@ class Contact extends Component
             }
             this.props.history.replace('/');
          })
-         .catch(err => {
-            this.loading(false);
-         });
+         .catch(err => this.loading(false));
    }
 
    validationHandler = (identifier) => {
@@ -116,7 +114,9 @@ class Contact extends Component
       updatedFormElement.valid = false;
       updatedForm[identifier] = updatedFormElement;
       // Set new state
-      this.setState({form: updatedForm});
+      this.setState({
+         form: updatedForm
+      });
    }
 
    inputChangedHandler = (identifier, event) => {
@@ -124,7 +124,9 @@ class Contact extends Component
       const updatedFormElement = {...this.state.form[identifier]};
       updatedFormElement.value = event.target.value;
       updatedForm[identifier] = updatedFormElement;
-      this.setState({form: updatedForm});
+      this.setState({
+         form: updatedForm
+      });
    }
 
    render()
@@ -140,32 +142,35 @@ class Contact extends Component
       }
 
       // Check loading
-      let form = !this.state.loading ?
+      let formContent = !this.state.loading ?
       (
-         <form onSubmit={this.orderHandler}>
-         {
-            formElementsArray.map(formElement => (
-               <Input
-                  key={formElement.id}
-                  elementType={formElement.config.elementType}
-                  elementConfig={formElement.config.elementConfig}
-                  value={formElement.config.value}
-                  changed={this.inputChangedHandler.bind(this, formElement.id)}
-                  valid={formElement.config.valid}
-               />
-            ))
-         }
+         <Fragment>
+            {
+               formElementsArray.map(formElement => (
+                  <Input
+                     key={formElement.id}
+                     elementType={formElement.config.elementType}
+                     elementConfig={formElement.config.elementConfig}
+                     value={formElement.config.value}
+                     changed={this.inputChangedHandler.bind(this, formElement.id)}
+                     valid={formElement.config.valid}
+                  />
+               ))
+            }
             <Button
-               buttonType="Success"
+               styleType="Success"
+               type="submit"
                clicked={this.orderHandler}
-            >Order</Button>
-         </form>
+            >ORDER</Button>
+         </Fragment>
       ) : <Spinner/>;
 
       return (
          <div className={Class.ContactData}>
             <h4>Enter your contact details:</h4>
-            {form}
+            <form>
+               {formContent}
+            </form>
          </div>
       );
    }

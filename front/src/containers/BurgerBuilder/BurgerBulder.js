@@ -4,12 +4,12 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import UIContext from '../../store/context';
+import Context from '../../store/context';
 
 class BurgerBuilder extends Component 
 {
    // Initialization required for use of context
-   static contextType = UIContext;
+   static contextType = Context;
 
    state = {
       order: false
@@ -18,7 +18,6 @@ class BurgerBuilder extends Component
    componentDidMount()
    {
      this.context.setIngredients();
-     console.log(`BurgerBuilder mounted`);
    }
 
    orderClickHandler = () => {

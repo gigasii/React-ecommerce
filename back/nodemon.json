@@ -1,0 +1,5 @@
+{
+   "env": {
+      "WEB_TOKEN_KEY": "TOPSECRET"
+   }
+}

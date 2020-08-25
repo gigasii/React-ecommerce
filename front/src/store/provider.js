@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import UIContext from './context';
+import Context from './context';
 import axios from '../axios';
 import withError from '../hoc/withError';
 
@@ -10,12 +10,17 @@ const INGREDIENT_PRICES = {
    bacon: 1.5
 }
 
-class UIProvider extends Component
+class Provider extends Component
 {
    state = {
       ingredients: null,
       totalPrice: 0,
-      purchasable: null
+      purchasable: null,
+      authenticate: false
+   }
+
+   setAuthenticationHandler = (status) => {
+      return this.setState({authenticate: status});
    }
 
    setIngredientsHandler = () => {
@@ -66,20 +71,22 @@ class UIProvider extends Component
    render()
    {
       return (
-         <UIContext.Provider
+         <Context.Provider
             value={{
                ingredients: this.state.ingredients,
                totalPrice: this.state.totalPrice,
                purchasable: this.state.purchasable,
+               authenticate: this.state.authenticate,
                setIngredients: this.setIngredientsHandler,
                addIngredient: this.addIngredientHandler,
-               removeIngredient: this.removeIngredientHandler
+               removeIngredient: this.removeIngredientHandler,
+               setAuthentication: this.setAuthenticationHandler
             }}
          >
             {this.props.children}
-         </UIContext.Provider>
+         </Context.Provider>
       );
    }
 }
 
-export default withError(UIProvider, axios);
+export default withError(Provider, axios);
