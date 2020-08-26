@@ -6,7 +6,7 @@ const routes = require('./routes/general');
 
 // Initialization
 const app = express();
-const MONGO_DB_URI = 'mongodb+srv://giggs:123@cluster0.wwnlt.mongodb.net/burgerbuilder?retryWrites=true&w=majority'
+const MONGO_DB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.wwnlt.mongodb.net/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
 
 // Allow cross-origin resource sharing (CORS)
 app.use((req, res, next) => {
@@ -33,6 +33,7 @@ app.use((err, req, res, next) => {
 mongoose.connect(MONGO_DB_URI, {useNewUrlParser: true, useUnifiedTopology: true})
    .then(() => {
       // Start server
-      app.listen(8080);
+      const port = process.env.PORT || 8080;
+      app.listen(port);
    });
 
