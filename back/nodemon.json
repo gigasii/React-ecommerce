@@ -1,5 +1,8 @@
 {
    "env": {
-      "WEB_TOKEN_KEY": "TOPSECRET"
+      "WEB_TOKEN_KEY": "TOPSECRET",
+      "MONGO_USER": "giggs",
+      "MONGO_PASSWORD": 123,
+      "MONGO_DATABASE": "burgerbuilder"
    }
 }
