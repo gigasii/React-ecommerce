@@ -33,12 +33,12 @@ class Layout extends Component
          <Fragment>
             <Toolbar
                drawerToggleClicked={this.sideDrawerToggleHandler}
-               auth={this.context.authenticate}
+               auth={this.context.state.authenticate}
             />
             <SideDrawer
                show={this.state.showSideDrawer}
                closed={this.sideDrawerClosedHandler}
-               auth={this.context.authenticate}
+               auth={this.context.state.authenticate}
             />
             <main className={Class.Content}>
                {this.props.children}

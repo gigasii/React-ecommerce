@@ -20,10 +20,10 @@ class Checkout extends Component
    render()
    {
       // Check if there are ingredients for summary to show
-      const checkoutSummary = this.context.ingredients ? 
+      const checkoutSummary = this.context.state.ingredients ? 
       (
          <CheckoutSummary
-            ingredients={this.context.ingredients}
+            ingredients={this.context.state.ingredients}
             checkoutCancelled={this.checkoutCancelled}
             checkoutContinued={this.checkoutContinued}
          />

@@ -81,8 +81,8 @@ class Contact extends Component
          formData[key] = this.state.form[key].value;
       }
       const order = {
-         ingredients: this.context.ingredients,
-         price: this.context.totalPrice,
+         ingredients: this.context.state.ingredients,
+         price: this.context.state.totalPrice,
          customer: formData
       };
       // Send a http request to server

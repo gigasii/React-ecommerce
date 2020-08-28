@@ -39,35 +39,35 @@ class BurgerBuilder extends Component
    render()
    {
       // Check which button to disable
-      const disabledInfo = {...this.context.ingredients};
+      const disabledInfo = {...this.context.state.ingredients};
       for (let key in disabledInfo)
       {
          disabledInfo[key] = disabledInfo[key] <= 0;
       }
       
       // Check loading
-      let orderSummary = this.context.ingredients ?
+      let orderSummary = this.context.state.ingredients ?
       (
          <OrderSummary
-            ingredients={this.context.ingredients}
+            ingredients={this.context.state.ingredients}
             orderContinued={this.orderPurchaseHandler}
             orderCanceled={this.orderCancelHandler}
-            price={this.context.totalPrice}
+            price={this.context.state.totalPrice}
          />
       ) : <Spinner/>;
 
-      let burgerPlusControls = this.context.ingredients ?
+      let burgerPlusControls = this.context.state.ingredients ?
       (
          <Fragment>
             <Burger
-               ingredients={this.context.ingredients}
+               ingredients={this.context.state.ingredients}
             />
             <BuildControls 
                addIngredient={this.context.addIngredient}
                removeIngredient={this.context.removeIngredient}
                disabled={disabledInfo}
-               price={this.context.totalPrice}
-               purchasable={this.context.purchasable}
+               price={this.context.state.totalPrice}
+               purchasable={this.context.state.purchasable}
                ordered={this.orderClickHandler}
             />
          </Fragment>

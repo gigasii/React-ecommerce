@@ -73,10 +73,7 @@ class Provider extends Component
       return (
          <Context.Provider
             value={{
-               ingredients: this.state.ingredients,
-               totalPrice: this.state.totalPrice,
-               purchasable: this.state.purchasable,
-               authenticate: this.state.authenticate,
+               state: this.state,
                setIngredients: this.setIngredientsHandler,
                addIngredient: this.addIngredientHandler,
                removeIngredient: this.removeIngredientHandler,
